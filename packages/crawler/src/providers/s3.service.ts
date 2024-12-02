@@ -12,10 +12,11 @@ export class S3Service {
   s3: S3Client;
   constructor(private configService: ConfigService) {
     this.s3 = new S3Client({
-      region: configService.get('S3_REGION'),
+      region: this.configService.get('S3_REGION'),
+      endpoint: this.configService.get('S3_ENDPOINT'),
       credentials: {
-        accessKeyId: configService.get('S3_ACCESS_KEY_ID'),
-        secretAccessKey: configService.get('S3_ACCESS_SECERT'),
+        accessKeyId: this.configService.get('S3_ACCESS_KEY_ID'),
+        secretAccessKey: this.configService.get('S3_ACCESS_SECERT'),
       },
     });
   }
@@ -42,7 +43,7 @@ export class S3Service {
 
       return `${this.configService.get('S3_BASE')}/${fileKey}`;
     } catch (error) {
-      Logger.error('Error uploading file to S3', error);
+      Logger.error('Error uploading file to S3:', error);
       throw error;
     }
   }
