@@ -6,18 +6,31 @@ import {
   PutObjectCommandInput,
 } from '@aws-sdk/client-s3';
 import { v4 } from 'uuid';
+import { NodeHttpHandler } from '@aws-sdk/node-http-handler';
+import * as https from 'https';
 
 @Injectable()
 export class S3Service {
   s3: S3Client;
   constructor(private configService: ConfigService) {
+    const endpoint = this.configService.get('S3_ENDPOINT');
+    const region = this.configService.get('S3_REGION');
+    
     this.s3 = new S3Client({
-      region: this.configService.get('S3_REGION'),
-      endpoint: this.configService.get('S3_ENDPOINT'),
+      region,
+      endpoint,
       credentials: {
         accessKeyId: this.configService.get('S3_ACCESS_KEY_ID'),
         secretAccessKey: this.configService.get('S3_ACCESS_SECERT'),
       },
+      forcePathStyle: true,
+      requestHandler: new NodeHttpHandler({
+        httpsAgent: new https.Agent({
+          rejectUnauthorized: true,
+          secureProtocol: 'TLSv1_2_method',
+          minVersion: 'TLSv1.2',
+        }),
+      }),
     });
   }
 
@@ -40,7 +53,6 @@ export class S3Service {
 
     try {
       await this.s3.send(command);
-
       return `${this.configService.get('S3_BASE')}/${fileKey}`;
     } catch (error) {
       Logger.error('Error uploading file to S3:', error);
