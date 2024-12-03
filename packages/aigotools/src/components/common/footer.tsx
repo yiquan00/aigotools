@@ -34,9 +34,7 @@ export default function Footer({ className }: { className?: string }) {
         </div>
         <div className="flex-1 flex justify-start sm:justify-end mt-6 sm:mt-0 font-semibold text-primary text-sm sm:text-base">
           <div className="flex-grow-0 flex-shrink-0 basis-40 flex flex-col gap-2 text-left sm:text-right">
-            <Link href={"https://aigotools.com"} target="_blank">
-              AigoTools
-            </Link>
+
             <Link href={"/#featured"}>{t("featured")}</Link>
             <Link href={"/#latest"}>{t("latestSubmit")}</Link>
             <Link href={"/submit"}>{t("submitATool")}</Link>

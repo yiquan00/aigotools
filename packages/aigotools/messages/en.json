@@ -24,7 +24,7 @@
     "categoryManage": "Category Manage"
   },
   "index": {
-    "slogan": "Search 10000+ Useful AI Tools By What You Need",
+    "slogan": "AIToolPro: Work Smarter, Not Harder",
     "featured": "Featured",
     "latest": "Latest",
     "searchPlaceholder": "i want to write an article...",
@@ -54,14 +54,18 @@
     "relatedSearchs": "Related Searchs"
   },
   "search": {
-    "metadata": { "title": "Search AI tools" },
+    "metadata": {
+      "title": "Search AI tools"
+    },
     "result": "Search Result",
     "empty": "Oppos,no result...",
     "loadMore": "Load More",
     "loadFailed": "Load Failed"
   },
   "submit": {
-    "metadata": { "title": "Submit yout AI Tool" },
+    "metadata": {
+      "title": "Submit yout AI Tool"
+    },
     "title": "Submit yout AI Tool",
     "subTitle": "Submit your website in one minute",
     "websiteName": "Website Name",
@@ -75,7 +79,6 @@
     "failSubmit": "Fail to submit, please retry or contact us",
     "request": "Add {code} to your website homepage, and then you can submit your website successfully for free！"
   },
-
   "reviewManage": {
     "title": "Review Manage",
     "siteName": "Site Name",
@@ -189,7 +192,9 @@
     "weight": "Weight"
   },
   "categories": {
-    "metadata": { "title": "Categories" },
+    "metadata": {
+      "title": "Categories"
+    },
     "loadFailed": "Load Failed"
   }
 }
