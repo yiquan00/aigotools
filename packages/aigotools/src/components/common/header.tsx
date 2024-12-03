@@ -51,9 +51,7 @@ export default function Header({ className }: { className?: string }) {
     >
       <Logo />
       <div className="flex items-center gap-2 sm:gap-4">
-        <Link href={"https://github.com/someu/aigotools"} target="_blank">
-          <Github className="text-primary cursor-pointer" size={16} />
-        </Link>
+
         <LanguageSwitcher />
         <ThemeSwitcher />
         <SignedOut>

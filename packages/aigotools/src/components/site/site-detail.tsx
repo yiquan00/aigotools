@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { Button, Divider, Image } from "@nextui-org/react";
+import { Button, Divider } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { ExternalLink, Navigation } from "lucide-react";
 import Link from "next/link";
@@ -37,16 +37,15 @@ export default function SiteDetail({ site }: { site: Site }) {
       </div>
       <div className="mt-9 flex flex-wrap lg:flex-nowrap gap-6">
         <div className="flex-1 basis-full lg:basis-[30%]">
-          <Image
-            isZoomed
-            alt={site.name}
-            classNames={{
-              wrapper: "w-full !max-w-full cursor-pointer",
-              img: "w-full aspect-video object-fill",
-            }}
-            radius="sm"
-            src={site.snapshot}
-          />
+          <div className="relative shadow-black/5 shadow-none rounded-small w-full !max-w-full cursor-pointer">
+            <div className="relative overflow-hidden rounded-inherit rounded-small">
+              <img
+                alt={site.name}
+                className="relative z-10 shadow-black/5 shadow-none transform hover:scale-125 transition-transform motion-reduce:transition-none !duration-300 rounded-small w-full aspect-video object-cover"
+                src={site.snapshot}
+              />
+            </div>
+          </div>
           <SiteTags site={site} />
         </div>
         <div className="flex-1 basis-full lg:basis-[70%] text-base text-primary-700 font-normal">
