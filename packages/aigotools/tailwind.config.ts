@@ -42,7 +42,21 @@ const config: Config = {
     "../../node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'grid': 'grid 20s linear infinite',
+      },
+      keyframes: {
+        'grid': {
+          '0%': {
+            transform: 'translateY(0)',
+          },
+          '100%': {
+            transform: 'translateY(-100%)',
+          }
+        },
+      },
+    },
   },
   darkMode: "class",
   plugins: [
