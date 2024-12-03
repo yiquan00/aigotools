@@ -6,7 +6,7 @@
     "dashboard": "控制台"
   },
   "footer": {
-    "slogan": "发现 10000+ 有用的AI工具",
+    "slogan": "AIToolPro：让工作更轻松",
     "submitATool": "提交工具",
     "aboutUs": "关于我们",
     "contactUs": "联系我们",
@@ -24,7 +24,7 @@
     "categoryManage": "分类管理"
   },
   "index": {
-    "slogan": "发现 10000+ 有用的AI工具",
+    "slogan": "AIToolPro：让工作更轻松",
     "featured": "推荐",
     "latest": "最新",
     "searchPlaceholder": "我想写一篇文章...",
@@ -32,8 +32,8 @@
     "more": "更多 +"
   },
   "metadata": {
-    "title": "aigotools.com",
-    "description": "AigoTools 是领先的AI目录和搜索引擎。AigoTools 帮助您发现最佳AI、应用程序和服务列表，并提升您的个人和商业生产力至新高度。",
+    "title": "aitoolpro.work",
+    "description": "aitoolpro 是领先的AI目录和搜索引擎。aitoolpro 帮助您发现最佳AI、应用程序和服务列表，并提升您的个人和商业生产力至新高度。",
     "keywords": "开源AI导航站, AI目录, AI列表, AI搜索引擎, 人工智能应用程序, 最佳AI目录, 最佳AI, AI列表"
   },
   "site": {
@@ -54,20 +54,24 @@
     "relatedSearchs": "相关搜索"
   },
   "search": {
-    "metadata": { "title": "搜索AI工具" },
+    "metadata": {
+      "title": "搜索AI工具"
+    },
     "result": "搜索结果",
     "empty": "哎呀，结果为空...",
     "loadMore": "加载更多",
     "loadFailed": "加载失败"
   },
   "submit": {
-    "metadata": { "title": "提交你的AI工具" },
+    "metadata": {
+      "title": "提交你的AI工具"
+    },
     "title": "提交你的AI工具",
     "subTitle": "一键提交你的网站",
     "websiteName": "网站名称",
-    "websiteNamePlaceholder": "AigoTools",
+    "websiteNamePlaceholder": "aitoolpro",
     "websiteUrl": "网站URL",
-    "websiteUrlPlaceholder": "https://aigotools.com",
+    "websiteUrlPlaceholder": "https://aitoolpro.work",
     "submit": "提交",
     "requireName": "需要名称",
     "requireUrl": "需要URL",
@@ -75,7 +79,6 @@
     "failSubmit": "提交失败，请重试或联系我们",
     "request": "请将 {code} 添加到您的网站首页，然后您可以免费成功提交您的网站！"
   },
-
   "reviewManage": {
     "title": "审核管理",
     "siteName": "站点名称",
@@ -189,7 +192,9 @@
     "weight": "权重"
   },
   "categories": {
-    "metadata": { "title": "分类" },
+    "metadata": {
+      "title": "分类"
+    },
     "loadFailed": "加载失败"
   }
 }

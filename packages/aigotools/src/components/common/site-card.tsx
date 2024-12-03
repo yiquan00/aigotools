@@ -22,10 +22,11 @@ export default function SiteCard({ site }: { site: Site }) {
         alt={site.name}
         classNames={{
           wrapper: "w-full !max-w-full",
-          img: "w-full aspect-video object-fill",
+          img: "w-full aspect-video object-cover opacity-100 transition-all duration-300",
         }}
         radius="none"
-        src={site.snapshot}
+        src={site.snapshot.startsWith('http') ? site.snapshot : `https://${site.snapshot}`}
+        loading="lazy"
       />
       <div className="p-4">
         <div className="flex justify-between items-center">
