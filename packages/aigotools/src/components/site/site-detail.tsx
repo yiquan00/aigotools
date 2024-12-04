@@ -6,7 +6,6 @@ import Link from "next/link";
 import clsx from "clsx";
 
 import VoteButton from "./vote-button";
-import ListItem from "./list-item";
 import SiteTags from "./site-tags";
 
 import { Site } from "@/models/site";
@@ -94,7 +93,9 @@ export default function SiteDetail({ site }: { site: Site }) {
             <div className="lg:col-span-3">
               <ol className="space-y-3">
                 {site.usecases.map((item, i) => (
-                  <ListItem key={i} className="text-primary-700">{item}</ListItem>
+                  <li key={i} className="text-primary-700 list-disc ml-4">
+                    {item}
+                  </li>
                 ))}
               </ol>
             </div>
@@ -125,7 +126,7 @@ export default function SiteDetail({ site }: { site: Site }) {
             <div className="lg:col-span-3">
               <ol className="space-y-3">
                 {site.links?.login && (
-                  <ListItem>
+                  <li className="list-disc ml-4">
                     <Link 
                       className="text-primary-700 hover:text-primary-600 hover:underline transition-colors" 
                       href={site.links.login} 
@@ -133,10 +134,10 @@ export default function SiteDetail({ site }: { site: Site }) {
                     >
                       Login: {site.links.login}
                     </Link>
-                  </ListItem>
+                  </li>
                 )}
                 {site.links?.register && (
-                  <ListItem>
+                  <li className="list-disc ml-4">
                     <Link 
                       className="text-primary-700 hover:text-primary-600 hover:underline transition-colors" 
                       href={site.links.register} 
@@ -144,10 +145,10 @@ export default function SiteDetail({ site }: { site: Site }) {
                     >
                       Register: {site.links.register}
                     </Link>
-                  </ListItem>
+                  </li>
                 )}
                 {site.links?.documentation && (
-                  <ListItem>
+                  <li className="list-disc ml-4">
                     <Link 
                       className="text-primary-700 hover:text-primary-600 hover:underline transition-colors" 
                       href={site.links.documentation} 
@@ -155,10 +156,10 @@ export default function SiteDetail({ site }: { site: Site }) {
                     >
                       Documentation: {site.links.documentation}
                     </Link>
-                  </ListItem>
+                  </li>
                 )}
                 {site.links?.pricing && (
-                  <ListItem>
+                  <li className="list-disc ml-4">
                     <Link 
                       className="text-primary-700 hover:text-primary-600 hover:underline transition-colors" 
                       href={site.links.pricing} 
@@ -166,7 +167,7 @@ export default function SiteDetail({ site }: { site: Site }) {
                     >
                       Pricing: {site.links.pricing}
                     </Link>
-                  </ListItem>
+                  </li>
                 )}
               </ol>
             </div>
@@ -178,7 +179,7 @@ export default function SiteDetail({ site }: { site: Site }) {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-4">
             <h2 className="text-xl font-bold text-primary-800">Related Searches</h2>
             <div className="lg:col-span-3 flex flex-wrap gap-2">
-              {site.related?.map((item, index) => (
+              {site.relatedSearchs?.map((item, index) => (
                 <Link
                   key={index}
                   href={`/search?q=${encodeURIComponent(item)}`}
