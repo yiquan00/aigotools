@@ -25,7 +25,7 @@ Provide a comprehensive website analysis JSON output that includes detailed intr
 5. Generate at least 10 SEO keywords for this website.
 6. Generate 5 search suggest words for similar websites to this website.
 7. Attempt to extract the website's own links, including the login page, registration page, documentation page, and pricing page. For pages that do not exist, set them to null.
-8. Generate a very detailed introduction for website promotion, including its Website Positioning, Target Audience, Core Features, Content Features, User Experience, Technical Features, and other information, with a minimum of 700 words.
+8. Generate a very detailed introduction for website promotion, including its Website Positioning, Target Audience, Core Features, Content Features, User Experience, Technical Features, and other information, with a minimum of 100 words.
 
 ## Output Format
 The output should be a directly parsable JSON string with the following TypeScript definition:
@@ -61,11 +61,11 @@ export interface SiteSummaryOutput {
   keywords: string[];
   searchSuggestWords: string[];
   pricingType:
-    | 'Pay-per-use'
-    | 'Subscription'
-    | 'Free'
-    | 'One-time purchase'
-    | 'Freemium';
+  | 'Pay-per-use'
+  | 'Subscription'
+  | 'Free'
+  | 'One-time purchase'
+  | 'Freemium';
   pricings: string[];
   links: {
     login?: string;
