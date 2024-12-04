@@ -45,6 +45,7 @@ const config: Config = {
     extend: {
       animation: {
         'grid': 'grid 20s linear infinite',
+        'shiny-text': 'shiny-text 2s linear infinite',
       },
       keyframes: {
         'grid': {
@@ -52,8 +53,13 @@ const config: Config = {
             transform: 'translateY(0)',
           },
           '100%': {
-            transform: 'translateY(-100%)',
+            transform: 'translateY(-66.6666%)',
           }
+        },
+        'shiny-text': {
+          'to': {
+            'backgroundPosition': '200% 0',
+          },
         },
       },
     },
