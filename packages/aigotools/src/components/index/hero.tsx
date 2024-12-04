@@ -47,16 +47,16 @@ export default function Hero() {
   const t = useTranslations("index");
 
   return (
-    <div className="relative min-h-[50vh] flex items-start justify-center px-4 pt-20">
+    <div className="relative min-h-[40vh] sm:min-h-[45vh] flex items-center justify-center px-4 pt-8 sm:pt-0">
       <RetroGrid />
-      <div
+      <h1
         className={clsx(
           istokWeb.className,
-          "relative text-3xl sm:text-5xl max-w-[1000px] !leading-[1.3] mx-auto font-bold text-center text-primary-800",
+          "relative text-3xl sm:text-5xl lg:text-6xl max-w-[1000px] !leading-[1.3] mx-auto font-bold text-center text-primary-800",
         )}
       >
         {t("slogan")}
-      </div>
+      </h1>
     </div>
   );
 }

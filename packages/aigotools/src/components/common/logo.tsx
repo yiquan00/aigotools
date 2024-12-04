@@ -13,7 +13,7 @@ const istokWeb = Istok_Web({
 export default function Logo({ className }: { className?: string }) {
   return (
     <Link href={"/"}>
-      <h1
+      <div
         className={clsx(
           "text-primary-800 font-bold text-2xl sm:text-4xl leading-none",
           className,
@@ -21,7 +21,7 @@ export default function Logo({ className }: { className?: string }) {
         )}
       >
         {AppConfig.siteName}
-      </h1>
+      </div>
     </Link>
   );
 }

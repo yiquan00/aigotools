@@ -39,7 +39,7 @@ export default function Search({
   const loadHistories = useCallback(() => {
     try {
       setHistories(JSON.parse(window.localStorage.getItem("histories") || ""));
-    } catch {}
+    } catch { }
   }, []);
 
   const saveHistories = useCallback(
@@ -79,19 +79,17 @@ export default function Search({
         />
       </DropdownTrigger>
       <DropdownMenu>
-        {
-          histories.map((item, index) => (
-            <DropdownItem
-              key={index}
-              onClick={() => {
-                setValue(item);
-                router.push(`/search?s=${encodeURIComponent(item)}`);
-              }}
-            >
-              {item}
-            </DropdownItem>
-          )) as any
-        }
+        {histories.map((item, index) => (
+          <DropdownItem
+            key={index}
+            onClick={() => {
+              setValue(item);
+              router.push(`/search?s=${encodeURIComponent(item)}`);
+            }}
+          >
+            {item}
+          </DropdownItem>
+        )) as any}
         <DropdownItem onClick={() => clearHistories()}>
           <Button
             className="w-full"
@@ -107,8 +105,8 @@ export default function Search({
   ) : null;
 
   return (
-    <Container className={clsx("mt-10 sm:mt-16", className)}>
-      <div className="max-w-[600px] mx-auto text-center relative">
+    <Container className={clsx("mt-4 sm:mt-6", className)}>
+      <div className="max-w-[800px] mx-auto px-4 sm:px-6">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -126,7 +124,8 @@ export default function Search({
               input:
                 "text-center font-semibold placeholder:transition-all placeholder:text-primary-300 placeholder:font-semibold group-hover:placeholder:text-primary-400 group-data-[focus=true]:placeholder:text-primary-400",
               mainWrapper: "group",
-              inputWrapper: "!border-primary-900",
+              inputWrapper: "!border-primary-900 shadow-lg",
+              base: "h-11 sm:h-14",
             }}
             endContent={history}
             placeholder={t("searchPlaceholder")}

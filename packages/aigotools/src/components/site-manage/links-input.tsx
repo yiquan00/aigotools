@@ -48,7 +48,7 @@ export default function LinksInput({
               onValueChange={(itemValue) => {
                 const newValue = {
                   ...value,
-                  [item.key]: itemValue,
+                  [item.key]: itemValue ? `${itemValue}${itemValue.includes('?') ? '&' : '?'}rel=aitoolpro.work` : '',
                 };
 
                 onChange(newValue);
