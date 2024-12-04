@@ -27,11 +27,10 @@ export default function Footer({ className }: { className?: string }) {
           <div className="font-normal flex items-center gap-2 text-primary text-tiny sm:text-sm">
             @2024 {AppConfig.siteName}.All rights reserved.
           </div>
-          <div className="mt-2">
-            <Link href={"https://github.com/someu/aigotools"} target="_blank">
-              <Github className="text-primary cursor-pointer" size={16} />
-            </Link>
+          <div className="font-normal flex items-center gap-2 text-primary text-tiny sm:text-sm mt-1">
+            Based on <Link className="hover:text-primary-400" href="https://github.com/someu/aigotools" target="_blank">AigoTools</Link>. Licensed under the <Link className="hover:text-primary-400" href="https://github.com/someu/aigotools/blob/main/LICENSE" target="_blank">Apache License 2.0</Link>
           </div>
+
         </div>
         <div className="flex-1 flex justify-start sm:justify-end mt-6 sm:mt-0 font-semibold text-primary text-sm sm:text-base">
           <div className="flex-grow-0 flex-shrink-0 basis-40 flex flex-col gap-2 text-left sm:text-right">

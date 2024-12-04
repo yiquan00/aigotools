@@ -10,7 +10,7 @@
   
     
     也可以直接通过下面的模版创建项目，然后进行后面的配置：
-  [![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com/templates/9PSGFO?referralCode=someu)
+  [![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com/templates/9PSGFO?referralCode=yiquan00)
 
 4. 配置MinIO服务的网络，为web和console生成对应的域名。web端域名用于访问图片，console端的域名用于管理MinIO。从环境变量中查看MinIO的用户名密码，并从console端进入管理后台。进入管理后台后，创建一个`images`bucket，用来存储图片。再配置该bucket的匿名访问模式为可读。最后生成一个apiKey。
 5. 配置aigotools-main服务的网络，生成一个域名，这个域名是AigoTools服务的域名，也可以自定一个域名。
