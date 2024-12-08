@@ -1,7 +1,7 @@
 "use server";
 import { currentUser } from "@clerk/nextjs/server";
 import { FilterQuery } from "mongoose";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { createTemplateSite } from "./create-template-site";
 import { ProcessStage, ReviewState, SiteState } from "./constants";
@@ -94,26 +94,26 @@ export async function searchSites({
 
     const regFindSites = search
       ? await SiteModel.find({
-          $or: [
-            { name: { $regex: search, $options: "i" } },
-            { siteKey: { $regex: search, $options: "i" } },
-          ],
-          state: SiteState.published,
-        })
-          .sort({ weight: -1, updatedAt: -1 })
-          .limit(12)
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { siteKey: { $regex: search, $options: "i" } },
+        ],
+        state: SiteState.published,
+      })
+        .sort({ weight: -1, updatedAt: -1 })
+        .limit(12)
       : [];
 
     query._id = { $nin: [] };
 
     const baseFindTask = search
       ? SiteModel.find(query, { score: { $meta: "textScore" } }).sort({
-          score: { $meta: "textScore" },
-        })
+        score: { $meta: "textScore" },
+      })
       : SiteModel.find(query).sort({
-          weight: -1,
-          updatedAt: -1,
-        });
+        weight: -1,
+        updatedAt: -1,
+      });
 
     const findTask = baseFindTask
       .skip((page - 1) * pageSize)
@@ -589,21 +589,19 @@ export async function dispatchSiteCrawl(siteId: string) {
     console.log('爬虫服务响应:', response.data);
     return response.data;
   } catch (error) {
-    console.error("站点爬取分发错误:", error.message);
-    if (error.response) {
-      console.error('服务响应错误:', {
-        数据: error.response.data,
-        状态码: error.response.status,
-        headers: error.response.headers
-      });
-    } else if (error.request) {
-      console.error('请求错误 - 未收到响应:', {
-        method: error.config?.method,
-        url: error.config?.url,
-        headers: error.config?.headers
-      });
-    } else {
-      console.error('请求配置错误:', error.config);
+    if (error instanceof AxiosError) {
+      console.error("站点爬取分发错误:", error.message);
+      if (error.response) {
+        console.error("服务响应错误:", {
+          数据: error.response.data,
+          状态码: error.response.status,
+          headers: error.response.headers,
+        });
+      } else if (error.request) {
+        console.error("请求错误 - 未收到响应:", error.request);
+      } else {
+        console.error("请求配置错误:", error.config);
+      }
     }
     throw error;
   }
