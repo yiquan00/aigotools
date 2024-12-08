@@ -27,7 +27,7 @@ export default function FriendLinks() {
     }
 
     fetchLinks();
-    const interval = setInterval(fetchLinks, 1000 * 60); // 每分钟刷新一次
+    const interval = setInterval(fetchLinks, 1000 * 300); // 每分钟刷新一次
     return () => clearInterval(interval);
   }, []);
 

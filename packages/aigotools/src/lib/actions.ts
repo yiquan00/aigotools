@@ -549,19 +549,62 @@ export async function updateReviewState(reviewId: string, state: ReviewState) {
 
 export async function dispatchSiteCrawl(siteId: string) {
   try {
+    console.log('开始分发站点爬取任务，站点ID:', siteId);
     await assertIsManager();
+    console.log('管理员权限验证通过');
 
-    await axios.post(
-      `${AppConfig.crawlerGateway}/dispatch`,
+    const crawlerUrl = AppConfig.crawlerGateway;
+    const authToken = AppConfig.crawlerAuthToken;
+
+    console.log('爬虫服务配置:', {
+      gateway: crawlerUrl,
+      hasAuthToken: !!authToken
+    });
+
+    if (!crawlerUrl) {
+      throw new Error('爬虫服务地址未配置 (CRAWLER_GATEWAY)');
+    }
+
+    if (!authToken) {
+      throw new Error('爬虫服务认证信息未配置 (CRAWLER_AUTH_USER/CRAWLER_AUTH_PASSWORD)');
+    }
+
+    console.log('准备发送请求到爬虫服务:', {
+      url: `${crawlerUrl}/dispatch`,
+      siteIds: [siteId]
+    });
+
+    const response = await axios.post(
+      `${crawlerUrl}/dispatch`,
       { siteIds: [siteId] },
       {
         headers: {
-          Authorization: `Basic ${AppConfig.crawlerAuthToken}`,
+          'Authorization': `Basic ${authToken}`,
+          'Content-Type': 'application/json'
         },
+        timeout: 30000,
       }
     );
+
+    console.log('爬虫服务响应:', response.data);
+    return response.data;
   } catch (error) {
-    console.log("Dispatch site crawl error", error);
+    console.error("站点爬取分发错误:", error.message);
+    if (error.response) {
+      console.error('服务响应错误:', {
+        数据: error.response.data,
+        状态码: error.response.status,
+        headers: error.response.headers
+      });
+    } else if (error.request) {
+      console.error('请求错误 - 未收到响应:', {
+        method: error.config?.method,
+        url: error.config?.url,
+        headers: error.config?.headers
+      });
+    } else {
+      console.error('请求配置错误:', error.config);
+    }
     throw error;
   }
 }

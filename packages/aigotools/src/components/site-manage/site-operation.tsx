@@ -102,16 +102,35 @@ export default function SiteOperation({
       }
       try {
         setOperationing(true);
-        await dispatchSiteCrawl(site._id);
-        await handleSearch();
+        toast.promise(
+          async () => {
+            const response = await dispatchSiteCrawl(site._id);
+            console.log('爬虫任务分发响应:', response);
+            await handleSearch();
+            return response;
+          },
+          {
+            pending: t("dispatching"),
+            success: {
+              render({data}) {
+                return `${t("dispatchSuccess")}: ${JSON.stringify(data)}`;
+              }
+            },
+            error: {
+              render({data}) {
+                console.error('爬虫任务分发错误:', data);
+                return t("dispatchFailed");
+              }
+            }
+          }
+        );
       } catch (error) {
-        console.log(error);
-        toast(t("dispatchFailed"));
+        console.error('爬虫任务分发异常:', error);
       } finally {
         setOperationing(false);
       }
     },
-    [handleSearch, operationing, site._id, t],
+    [handleSearch, operationing, site._id, t]
   );
 
   return (

@@ -29,7 +29,7 @@ export const AppConfig = {
   s3Region: (process.env.S3_REGION as string) || "",
   s3Bucket: (process.env.S3_BUCKET as string) || "",
   s3AccessKey: (process.env.S3_ACCESS_KEY_ID as string) || "",
-  s3Secert: (process.env.S3_ACCESS_SECERT as string) || "",
+  s3Secert: (process.env.S3_ACCESS_SECRET as string) || "",
   // tencent cos
   cosBase: (process.env.COS_BASE as string) || "",
   cosRegion: (process.env.COS_REGION as string) || "",

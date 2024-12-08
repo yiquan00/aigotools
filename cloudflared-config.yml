@@ -1,0 +1,7 @@
+tunnel: 1e876355-b9cf-4e7a-87fa-35e44d9dd04d
+credentials-file: C:\Users\Administrator\.cloudflared\1e876355-b9cf-4e7a-87fa-35e44d9dd04d.json
+
+ingress:
+  - hostname: crawler.aitoolpro.work
+    service: http://localhost:13000
+  - service: http_status:404

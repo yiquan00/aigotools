@@ -3,3 +3,5 @@
 !.volumes/**/.gitkeep
 node_modules
 .DS_Store
+packages/crawler/.env
+packages/aigotools/.env

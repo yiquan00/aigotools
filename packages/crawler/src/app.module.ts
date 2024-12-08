@@ -11,6 +11,7 @@ import { BasicAuthMiddleware } from './middleware/basic-auth.middleware';
 import { Site, SiteSchema } from './schemas/site.schema';
 import { SiteQueueModule } from './site-queue/site-queue.module';
 import { MinioService } from './providers/minio.service';
+import { Logger } from '@nestjs/common';
 
 @Module({
   imports: [
@@ -26,17 +27,45 @@ import { MinioService } from './providers/minio.service';
     }),
     MongooseModule.forFeature([{ name: Site.name, schema: SiteSchema }]),
     BullModule.forRootAsync({
-      useFactory(configService: ConfigService) {
-        return {
-          redis: {
-            db: configService.get('REDIS_DB'),
-            host: configService.get('REDIS_HOST'),
-            port: configService.get('REDIS_PORT'),
-            password: configService.get('REDIS_PASS'),
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        const redisConfig = {
+          host: 'localhost',
+          port: 6379,
+          maxRetriesPerRequest: 3,
+          retryStrategy: (times: number) => {
+            Logger.debug(`Redis retry attempt ${times}`);
+            if (times > 3) {
+              Logger.error('Redis connection failed after 3 retries');
+              return null;
+            }
+            const delay = Math.min(times * 1000, 3000);
+            Logger.debug(`Redis retry in ${delay}ms`);
+            return delay;
           },
+          enableReadyCheck: false
+        };
+
+        Logger.log('Initializing Redis connection with config:');
+        Logger.log('Object:', {
+          host: redisConfig.host,
+          port: redisConfig.port.toString()
+        });
+
+        return {
+          redis: redisConfig,
+          prefix: 'crawler:',
+          defaultJobOptions: {
+            attempts: 3,
+            backoff: {
+              type: 'exponential',
+              delay: 1000,
+            },
+            removeOnComplete: true,
+            removeOnFail: false
+          }
         };
       },
-      imports: [ConfigModule],
       inject: [ConfigService],
     }),
     BullBoardModule.forRootAsync({

@@ -15,19 +15,18 @@ export class S3Service {
   constructor(private configService: ConfigService) {
     const endpoint = this.configService.get('S3_ENDPOINT');
     const region = this.configService.get('S3_REGION');
-    
+
     this.s3 = new S3Client({
       region,
       endpoint,
       credentials: {
         accessKeyId: this.configService.get('S3_ACCESS_KEY_ID'),
-        secretAccessKey: this.configService.get('S3_ACCESS_SECERT'),
+        secretAccessKey: this.configService.get('S3_ACCESS_SECRET'),
       },
       forcePathStyle: true,
       requestHandler: new NodeHttpHandler({
         httpsAgent: new https.Agent({
           rejectUnauthorized: true,
-          secureProtocol: 'TLSv1_2_method',
           minVersion: 'TLSv1.2',
         }),
       }),

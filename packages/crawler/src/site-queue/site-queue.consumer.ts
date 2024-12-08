@@ -36,71 +36,71 @@ export class SiteConsumer {
     private redisService: RedisService,
     private minioService: MinioService,
     private cosService: COSService,
-  ) {}
+  ) { }
 
   private async getUrlScreenshot(url: string) {
-    const cacheKey = `aogotools:${encodeURIComponent(url)}:screenshopt`;
-    const cache = await this.redisService.redisClient.get(cacheKey);
-    if (cache) {
-      try {
-        return JSON.parse(cache) as {
-          snapshot: string;
-          keywords: string[];
-          desceription: string;
-        };
-      } catch (error) {
-        Logger.error(`Parse screenshopt cache error: ${error}`);
+    try {
+      const cacheKey = `aogotools:${encodeURIComponent(url)}:screenshopt`;
+      const cache = await this.redisService.redisClient.get(cacheKey);
+      if (cache) {
+        try {
+          return JSON.parse(cache);
+        } catch (error) {
+          Logger.error(`Parse screenshot cache error: ${error}`);
+        }
       }
+
+      const {
+        keywords,
+        desceription,
+        screenshot: imageBuffer,
+      } = await this.browserService.screenshot(url);
+
+      const resizedSnapshot = await sharp(imageBuffer)
+        .toFormat('webp')
+        .resize(800, 450, { position: 'top' })
+        .toBuffer();
+
+      const imageStorage = this.configService.get('IMAGE_STORAGE') as 'minio' | 's3' | 'cos';
+      const contentType = 'image/webp';
+
+      let snapshot = '';
+      if (imageStorage === 's3') {
+        snapshot = await this.s3Service.uploadBufferToS3(
+          resizedSnapshot,
+          contentType,
+        );
+      } else if (imageStorage === 'minio') {
+        snapshot = await this.minioService.uploadFile(
+          resizedSnapshot,
+          contentType,
+        );
+      } else if (imageStorage === 'cos') {
+        snapshot = await this.cosService.uploadBufferToCOS(
+          resizedSnapshot,
+          contentType,
+        );
+      }
+
+      Logger.log(`Screenshot uploaded for ${url}: ${snapshot}`);
+
+      const result = {
+        snapshot,
+        keywords,
+        desceription,
+      };
+
+      await this.redisService.redisClient.setex(
+        cacheKey,
+        600,
+        JSON.stringify(result),
+      );
+
+      return result;
+    } catch (error) {
+      Logger.error(`Screenshot error for ${url}: ${error}`);
+      throw error; // 让错误传播出去，这样我们可以看到具体的错误信息
     }
-    const {
-      keywords,
-      desceription,
-      screenshot: imageBuffer,
-    } = await this.browserService.screenshot(url);
-
-    const resizedSnapshot = await sharp(imageBuffer)
-      .toFormat('webp')
-      .resize(800, 450, { position: 'top' })
-      .toBuffer();
-
-    const imageStorage = this.configService.get('IMAGE_STORAGE') as
-      | 'minio'
-      | 's3'
-      | 'cos';
-    const contentType = 'image/webp';
-
-    let snapshot = '';
-    if (imageStorage === 's3') {
-      snapshot = await this.s3Service.uploadBufferToS3(
-        resizedSnapshot,
-        contentType,
-      );
-    } else if (imageStorage === 'minio') {
-      snapshot = await this.minioService.uploadFile(
-        resizedSnapshot,
-        contentType,
-      );
-    } else if (imageStorage === 'cos') {
-      snapshot = await this.cosService.uploadBufferToCOS(
-        resizedSnapshot,
-        contentType,
-      );
-    } else {
-      throw new Error(`Wrong image storage: ${imageStorage}`);
-    }
-
-    Logger.log(`Screenshopt ${url} success: ${snapshot}`);
-    await this.redisService.redisClient.setex(
-      cacheKey,
-      600,
-      JSON.stringify({ keywords, desceription, snapshot }),
-    );
-
-    return {
-      snapshot,
-      keywords,
-      desceription,
-    };
   }
 
   private async getUrlContent(url: string) {
